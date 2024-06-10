@@ -1,0 +1,39 @@
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La boutique e-commerce</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-white shadow p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'index' %}" class="text-3xl font-bold text-blue-600 hover:text-blue-800">
+                La boutique ecommerce
+            </a>
+
+            <div>
+                {% if user.is_authenticated %}
+                    <span class="text-gray-600">Compte : {{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="ml-4 text-red-500 hover:text-red-700">Déconnexion</a>
+                {% else %}
+                    <a href="{% url 'signup' %}" class="mr-4 text-blue-500 hover:text-blue-700">S'inscrire</a>
+                    <a href="{% url 'login' %}" class="text-blue-500 hover:text-blue-700">Se connecter</a>
+                {% endif %}
+
+                {% if user.cart %}
+                    <a href="{% url 'cart' %}" class="ml-4 text-green-500 hover:text-green-700">Panier</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
